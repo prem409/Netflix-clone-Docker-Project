@@ -21,7 +21,7 @@ jobs:
     - name: Build and tag Docker image
       run: |
         sudo -S docker build -t mywebsite08 .
-        sudo -S docker save mywebsite08:latest | gzip > mywebsite08.tar.gz
+        sudo -S docker save mywebsite08:latest | gzip > premkumar.tar.gz
    
 
     - name: Transfer Docker image to EC2
@@ -36,7 +36,7 @@ jobs:
         ssh-keyscan -H "$HOST" >> ~/.ssh/known_hosts
         
         # Transfer image using scp
-        scp -i ~/.ssh/id_rsa -P 22 mywebsite08.tar.gz ubuntu@$HOST:/tmp
+        scp -i ~/.ssh/id_rsa -P 22 premkumar.tar.gz ubuntu@$HOST:/tmp
 
     - name: Deploy to EC2
       env:
@@ -54,5 +54,5 @@ jobs:
           sudo -S docker load < /tmp/prem.tar.gz
           sudo -S docker stop prem || true
           sudo -S docker rm prem || true
-          sudo -S docker run -itd -p 8082:80 rajesh:latest
+          sudo -S docker run -itd -p 8082:80 prem:latest
         '
